@@ -1,0 +1,48 @@
+from flask import Flask, jsonify, request
+from flask_restful import Resource, Api, reqparse
+from flask_jwt import JWT, jwt_required
+from datetime import timedelta
+
+#Endpoint to register user
+from resources.user import UserRegister, UserLogin
+
+#Endpoint to get stock info
+from resources.stocks import StockRetriever
+from resources.stocks import  StockSearch
+
+#Use to enable CORS for all domains
+from flask_cors import CORS
+
+
+app = Flask(__name__)
+api = Api(app)
+
+#This fixes the 'XMLHttpsRequest has been blocked by CORS policy'
+#It will enable CORS support on all routes, for all origins and methods.
+CORS(app)
+
+@app.route('/')
+@app.route('/hello')
+def HelloWord():
+    return "Hello World"
+
+#Decryption Key
+app.secret_key = 'Edwin'
+
+
+api.add_resource(UserRegister, '/register')
+api.add_resource(UserLogin, '/login')
+api.add_resource(StockRetriever, '/stock')
+api.add_resource(StockSearch, '/stock-search')
+
+'''
+@jwt.auth_response_handler
+def customized_response_handler(access_token, identity):
+    return jsonify({
+        'authorization' : access_token.decode('utf-8'),
+        'user_id' : identity.id
+    })
+'''
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)

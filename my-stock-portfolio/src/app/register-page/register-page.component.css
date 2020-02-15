@@ -1,0 +1,41 @@
+.medium-list{
+    margin: auto;
+    width: auto;
+    padding:10px
+  }
+  
+  .list-viewer-wrapper {
+    border: 1px solid rgba(0, 0, 0, .03);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
+    margin: 20px;
+  }
+  
+  .list-header-title {
+    color: rgba(0, 0, 0, .54);
+    background: rgba(0, 0, 0, .03);
+    padding: 8px 20px;
+    font-weight: bold;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column; 
+    padding: 20px;
+    
+  }
+  
+  .form-button {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;  
+    
+  }
+  
+  input.form-control-password::-webkit-outer-spin-button,
+  input.form-control-password::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  input.form-control-password {
+    -moz-appearance: textfield;
+  }

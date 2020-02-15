@@ -1,0 +1,99 @@
+  
+<div class = "medium-list">
+  <div class="list-viewer-wrapper">
+    <div class="list-header-title">Register</div>
+    
+    <form [formGroup] = "form" (ngSubmit) = "onSubmit()">
+
+      <!-- First Name Field -->
+      <div class="form-container">
+        <mat-form-field>
+
+            <!-- Associate key from ts file: email -->
+            <input 
+                formControlName = "firstname"
+                matInput
+                id="firstame" 
+                type="text" 
+                class="form-control"
+                placeholder="First Name...">
+        </mat-form-field>
+        <div *ngIf="firstname.touched && firstname.invalid" 
+              class="alert alert-danger">
+              <mat-error *ngIf="firstname.errors.required">First name is <strong>Required!</strong></mat-error>
+        </div>
+      </div>
+
+      <!-- Last Name Field -->
+      <div class="form-container">
+        <mat-form-field>
+
+            <!-- Associate key from ts file: email -->
+            <input 
+                formControlName = "lastname"
+                matInput
+                id="lastname" 
+                type="text" 
+                class="form-control"
+                placeholder="Last Name...">
+        </mat-form-field>
+        <div *ngIf="lastname.touched && lastname.invalid" 
+              class="alert alert-danger">
+              <mat-error *ngIf="lastname.errors.required">First name is <strong>Required!</strong></mat-error>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-container">
+        <mat-form-field>
+
+            <!-- Associate key from ts file: email -->
+            <input 
+                formControlName = "email"
+                matInput
+                id="email" 
+                type="email" 
+                class="form-control"
+                placeholder="Email...">
+        </mat-form-field>
+        <div *ngIf="email.touched && email.invalid" 
+              class="alert alert-danger">
+              <mat-error *ngIf="email.errors.required">Email is <strong>Required!</strong></mat-error>
+              <mat-error *ngIf="email.errors.email">Invalid <strong>Email!</strong></mat-error>
+        </div>
+      </div>
+      
+      <!-- Password Field -->
+      <div class="form-container">
+          <mat-form-field>
+  
+              <!-- Associate key from ts file: username -->
+              <input 
+                  formControlName = "password"
+                  matInput
+                  id="password" 
+                  type="text" 
+                  class="form-control-password"
+                  placeholder="Password..."
+                  [type] = "hide ? 'password' : 'text' "
+                  autocomplete="off">
+              <mat-icon matSuffix (click) = "hide = !hide">{{ hide ? 'visibility_of' : 'visibility' }}</mat-icon>
+          </mat-form-field>
+          <div *ngIf="password.touched && password.invalid" 
+                class="alert alert-danger">
+                <mat-error *ngIf="password.errors.required">Password <strong>Required!</strong></mat-error>
+                <mat-error *ngIf="password.errors.minlength">Password must be of size {{ password.errors.minlength.requiredLength }}!</mat-error>
+          </div>
+      </div>
+
+        <div class="form-container">
+            <button class="form-button" mat-raised-button color = "accent" type="submit" [disabled] = "!form.valid">Register</button>
+        </div>      
+
+    </form>
+        <div class="form-container">
+            <button class="form-button"  mat-raised-button color = "primary" (click) = "login()">Log In</button>
+        </div>
+        
+  </div>
+</div>

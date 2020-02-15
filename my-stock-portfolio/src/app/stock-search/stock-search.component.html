@@ -1,0 +1,22 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+        <mat-form-field class = "search-card-bar">
+          <input
+            matInput 
+            type = "text"
+            #stockInput
+            [formControl] = "stockCtrl"
+            placeholder = "Tricker Symbol...">
+        </mat-form-field>
+
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="ard-content">
+    <mat-list *ngFor = "let stock of filteredStocks">
+      <mat-list-item>
+        {{ stock }}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
