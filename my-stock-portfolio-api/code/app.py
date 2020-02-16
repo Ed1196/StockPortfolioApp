@@ -8,7 +8,8 @@ from resources.user import UserRegister, UserLogin
 
 #Endpoint to get stock info
 from resources.stocks import StockRetriever
-from resources.stocks import  StockSearch
+from resources.stocks import StockSearch
+from resources.transactions import Transactions
 
 #Use to enable CORS for all domains
 from flask_cors import CORS
@@ -34,6 +35,7 @@ api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(StockRetriever, '/stock')
 api.add_resource(StockSearch, '/stock-search')
+api.add_resource(Transactions, '/purchase')
 
 '''
 @jwt.auth_response_handler

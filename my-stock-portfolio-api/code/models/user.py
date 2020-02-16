@@ -37,7 +37,14 @@ class UserModel():
         return self.user['idToken']
 
     @classmethod
-    def findByIdToken(cls, userId):
-        data = db.child("users").get(userId).val
-        print(data)
-        return data
+    def purchase_stock(cls, quantity, price: float, localId):
+        print(price)
+        user = db.child("users").child(localId).child("account")
+        currentBalance = user.get().val();
+        newBalance = currentBalance - (quantity * price)
+        db.child("users").child(localId).update({"account": newBalance})
+        return True
+
+    @classmethod
+    def find_by_id_token(cls, userId):
+        return auth.get_account_info(userId)
