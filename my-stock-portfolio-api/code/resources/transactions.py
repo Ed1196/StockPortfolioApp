@@ -21,7 +21,7 @@ class Transactions(Resource):
                         required=True,
                         help='This field cannot be left blank!')
 
-    parser.add_argument('idToken',
+    parser.add_argument('symbol',
                         type=str,
                         required=True,
                         help='This field cannot be left blank!')
@@ -34,7 +34,7 @@ class Transactions(Resource):
         data = Transactions.parser.parse_args()
         user = UserModel.find_by_id_token(request.idToken)
         localId = user['users'][0]['localId']
-        aproved = UserModel.purchase_stock(data['quantity'], data['price'], localId)
+        aproved = UserModel.purchase_stock(data['quantity'], data['price'], data['symbol'], localId)
         if aproved:
             return {'success': True}, 201
 

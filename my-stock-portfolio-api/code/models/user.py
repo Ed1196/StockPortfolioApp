@@ -37,7 +37,7 @@ class UserModel():
         return self.user['idToken']
 
     @classmethod
-    def purchase_stock(cls, quantity, price: float, localId):
+    def purchase_stock(cls, quantity, price: float, symbol, localId):
         #Retrieve user account
         user = db.child("users").child(localId).child("account")
         #Retrieve the account balance
@@ -47,7 +47,9 @@ class UserModel():
         if newBalance < 0:
             return False
         #Update the value
+        #Query builders
         db.child("users").child(localId).update({"account": newBalance})
+        db.child("users").child(localId).child("mystocks").child(symbol).set({"price": price, "quantity":quantity})
         return True
 
     @classmethod
