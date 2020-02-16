@@ -34,5 +34,8 @@ class Transactions(Resource):
         data = Transactions.parser.parse_args()
         user = UserModel.find_by_id_token(request.idToken)
         localId = user['users'][0]['localId']
-        UserModel.purchase_stock(data['quantity'], data['price'], localId)
-        return {'success': True}, 201
+        aproved = UserModel.purchase_stock(data['quantity'], data['price'], localId)
+        if aproved:
+            return {'success': True}, 201
+
+        return {'success': False}, 201

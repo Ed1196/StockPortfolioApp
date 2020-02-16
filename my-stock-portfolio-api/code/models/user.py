@@ -38,10 +38,15 @@ class UserModel():
 
     @classmethod
     def purchase_stock(cls, quantity, price: float, localId):
-        print(price)
+        #Retrieve user account
         user = db.child("users").child(localId).child("account")
+        #Retrieve the account balance
         currentBalance = user.get().val();
+        #Calculate new balance
         newBalance = currentBalance - (quantity * price)
+        if newBalance < 0:
+            return False
+        #Update the value
         db.child("users").child(localId).update({"account": newBalance})
         return True
 
