@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-content>
+    <mat-accordion>
+      <mat-expansion-panel 
+                            (opened) = "panelWasOpen(stock)"
+                            (closed) = "panelOpenState = false">
+    
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{stock}}
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+          <mat-card-actions>
+            <button mat-button>{{stockData.close}}</button>
+            <button mat-button>{{stockData.date}}</button>
+            <mat-form-field>
+              <mat-label>Quantity...</mat-label>
+              <input type="number" #myInput matInput placeholder="0">
+            </mat-form-field>
+            <button mat-button (click)="purchase(myInput.value)">PURCHASE</button>
+          </mat-card-actions>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>

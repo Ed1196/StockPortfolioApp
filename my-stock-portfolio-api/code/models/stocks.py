@@ -14,38 +14,49 @@ api_url = "https://www.alphavantage.co"
 class StockModel():
     def __init__(self, symbol):
         self.symbol = symbol
-        self.open = []
-        self.high = []
-        self.low = []
-        self.close = []
-        self.volume = []
+        self.open = 0
+        self.high = 0
+        self.low = 0
+        self.close = 0
+        self.volume = 0
+        self.volatility = 0
+        self.date = ''
 
     def json(self):
         return {
-            'symbol': self.firstname,
-            'open': self.lastname,
-            'high': self.email,
-            'low': self.account,
+
+            'symbol': self.symbol,
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
+            'volume': self.volume,
+            'volatility': self.volatility,
+            'date': self.date
         }
 
     # Day trading. We get the bolatility of the stock of any given minute.
     def getStockVolatility(self):
         # Time Series: A sequence of numerical data points taken at successuve equally spaced points in time
         # Records the stock price, over a specified period of time
-        ts = TimeSeries(key=api_key, output_format='pandas')
-        data, meta_data = ts.get_intraday(symbol=self.symbol, interval='1min', outputsize='full')
-        self.close = data['4. close']
-        percentage_change = self.close.pct_change()
-        last_change = percentage_change[-1]
-        return last_change
+        pass
 
-    def getStockPrice(self):
+    def getStockInfo(self):
         # Time Series: A sequence of numerical data points taken at successuve equally spaced points in time
         # Records the stock price, over a specified period of time
         ts = TimeSeries(key=api_key, output_format='pandas')
-        data, meta_data = ts.get_intraday(symbol=self.symbol, interval='1min', outputsize='compact')
-        self.close = data['4. close']
-        return self.close[0]
+        data, meta_data = ts.get_intraday(symbol=self.symbol, interval='1min', outputsize='full')
+        self.open = data['1. open'][0]
+        self.high = data['2. high'][0]
+        self.low = data['3. low'][0]
+        self.close = data['4. close'][0]
+        self.volume = data['5. volume'][0]
+        self.date = meta_data['3. Last Refreshed']
+
+        percentage_change = data['4. close'].pct_change()
+
+        self.volatility = percentage_change[-1]
+
 
     @classmethod
     def searchStock(self, query):

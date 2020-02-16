@@ -1,3 +1,4 @@
+import { StockTransactionsComponent } from './stock-transactions/stock-transactions.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -19,11 +20,14 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
-import { MatGridListModule, MatMenuModule, MatListModule, MatAutocompleteModule } from '@angular/material';
+import { MatGridListModule, MatMenuModule, MatListModule, MatAutocompleteModule, MatDividerModule, MatExpansionModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StockSearchComponent } from './stock-search/stock-search.component';
 import { StockPortfolioComponent } from './stock-portfolio/stock-portfolio.component';
-import { StockTransactionsComponent } from './stock-transactions/stock-transactions.component';
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { StockCardComponent } from './stock-card/stock-card.component';
+
 
 
 @NgModule({
@@ -36,7 +40,9 @@ import { StockTransactionsComponent } from './stock-transactions/stock-transacti
     MaterialDashboardComponent,
     StockSearchComponent,
     StockPortfolioComponent,
-    StockTransactionsComponent
+    StockTransactionsComponent,
+    StockCardComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -52,9 +58,12 @@ import { StockTransactionsComponent } from './stock-transactions/stock-transacti
     MatButtonModule,
     MatToolbarModule,
     MatInputModule,
-    MatInputModule,
     MatListModule,
     MatAutocompleteModule,
+    MatGridListModule,
+    ScrollingModule,
+    MatDividerModule,
+    MatExpansionModule,
     
     //HTTP requests
     HttpClientModule,

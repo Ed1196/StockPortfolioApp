@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-stock-transactions',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stock-transactions.component.css']
 })
 export class StockTransactionsComponent implements OnInit {
-
+  @Input() card: any;
   constructor() { }
 
   ngOnInit() {

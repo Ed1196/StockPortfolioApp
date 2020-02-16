@@ -1,21 +1,24 @@
-.grid-container {
-  margin: 20px;
-}
-
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
-.card-content {
-  text-align: center;
-}
-
 .card {
   position: absolute;
   top: 15px;
   left: 15px;
   right: 15px;
   bottom: 3px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.viewport {
+  height: 400px;
+  width: 100%;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+  
+}
+
+.item {
+  height: 100%;
+}
+
+.stock {
+  margin: 5px;
+ 
 }

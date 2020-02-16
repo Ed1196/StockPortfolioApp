@@ -18,14 +18,14 @@ export class MaterialDashboardComponent {
       console.log(matches)
       if (matches) {
         return [
-          { title: 'search', cols: 2, rows: 1 },
+          { title: 'search', cols: 2, rows: 2 },
           { title: 'portfolio', cols: 1, rows: 1 },
           { title: 'transactions', cols: 1, rows: 1 },
         ];
       }
 
       return [
-        { title: 'search', cols: 2, rows: 1 },
+        { title: 'search', cols: 2, rows: 2 },
         { title: 'portfolio', cols: 1, rows: 1 },
         { title: 'transaction', cols: 1, rows: 1 },
       ];

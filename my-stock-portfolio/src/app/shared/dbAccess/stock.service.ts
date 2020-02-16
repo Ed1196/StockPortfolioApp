@@ -22,7 +22,12 @@ export class StockService {
      } else {
       let params = new HttpParams().set("query", constrain);
       return this.http.get(this.rootUrl + "/stock-search", {params: params})
-     }
-    
+     }  
    }
+
+   getStockInfo(symbol: string): Observable<any> {
+     let params = new HttpParams().set("symbol", symbol);
+    return this.http.get(this.rootUrl + "/stock", {params: params})
+   }
+
 }

@@ -9,9 +9,9 @@ class StockRetriever(Resource):
         symbol = request.args.get("symbol")
         # We store the data that we parsed into a Variable
         stock = StockModel(symbol)
-        price = stock.getStockPrice()
-        volatility = stock.getStockVolatility()
-        return {'success': True, 'price': price, 'volatility': volatility}
+        stock.getStockInfo()
+        print(stock.json())
+        return stock.json()
 
 
 class StockSearch(Resource):
