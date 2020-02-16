@@ -1,5 +1,5 @@
 import { Observable, empty, from } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { StockModel } from './../models/stock.model';
 import { Injectable } from '@angular/core';
 
@@ -28,6 +28,16 @@ export class StockService {
    getStockInfo(symbol: string): Observable<any> {
      let params = new HttpParams().set("symbol", symbol);
     return this.http.get(this.rootUrl + "/stock", {params: params})
+   }
+
+   purchaseStock(quantity, price, idToken){
+    var reqHeader = new HttpHeaders({'No-Auth':'False'})
+    const body = {
+      quantity: quantity,
+      price: price,
+      idToken: idToken
+    }
+    return this.http.post(this.rootUrl + "/purchase", body, {headers: reqHeader})
    }
 
 }

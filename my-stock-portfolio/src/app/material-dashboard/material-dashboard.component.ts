@@ -15,7 +15,6 @@ export class MaterialDashboardComponent {
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
-      console.log(matches)
       if (matches) {
         return [
           { title: 'search', cols: 2, rows: 2 },

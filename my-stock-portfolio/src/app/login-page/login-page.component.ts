@@ -55,7 +55,7 @@ export class LoginPageComponent implements OnInit {
     this.user = Object.assign({}, this.form.value);
 
     if(this.userService.userAuthentication(this.user)){
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     } else {
       this.router.navigate(['/login']);
     }

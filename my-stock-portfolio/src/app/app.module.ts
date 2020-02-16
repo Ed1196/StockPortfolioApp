@@ -1,3 +1,6 @@
+import { AuthInterceptor } from './shared/auth.inspector';
+import { StockService } from './shared/dbAccess/stock.service';
+import { UserService } from './shared/dbAccess/user.service';
 import { StockTransactionsComponent } from './stock-transactions/stock-transactions.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,7 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
 import { MatGridListModule, MatMenuModule, MatListModule, MatAutocompleteModule, MatDividerModule, MatExpansionModule } from '@angular/material';
@@ -75,7 +78,9 @@ import { StockCardComponent } from './stock-card/stock-card.component';
     LayoutModule,
 
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

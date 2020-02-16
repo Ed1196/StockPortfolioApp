@@ -1,5 +1,4 @@
 import { HttpUserEvent } from "@angular/common/http";
-import 'rxjs/add/operator/do';
 import { Observable} from 'rxjs';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -21,16 +20,18 @@ export class AuthInterceptor implements HttpInterceptor {
         //If the request doesn't need auth; use this.
         //req.headers.get('No-Auth') :  This checks the header of the request
         //next.handle(req.clone()) : clone the whole request and send it
+        console.log(req.url)
         if (req.headers.get('No-Auth') == "True")
             return next.handle(req.clone());
 
         //If we do need auth, first if will fail.
         //localStorage.getItem('accessToken') : Will check if there is a token in local storage
-        if (localStorage.getItem('accessToken') != null) {
+        if (localStorage.getItem('idToken') != null) {
             //Copies request that was caught and adds the authorization
             const clonedreq = req.clone({
-                headers: req.headers.set("capstoneAuth", localStorage.getItem('accessToken'))
+                headers: req.headers.set("idToken", localStorage.getItem('idToken'))
             });
+            
             //This sends the request that was cloned.
             return next.handle(clonedreq);
         }
