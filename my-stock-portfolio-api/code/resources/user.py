@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from models.user import UserModel
-import json
+import security.myJWT
+from flask import request
 
 
 class UserRegister(Resource):
@@ -59,3 +60,15 @@ class UserLogin(Resource):
         user = UserModel('', '', data['email'], data['password'])
         idToken = user.auth()
         return {'success': True, 'idToken': idToken}, 201
+
+
+class UserInfo(Resource):
+
+    # Post Request
+    @security.myJWT.requires_auth
+    def get(self):
+        user = UserModel.find_by_id_token(request.idToken)
+        localId = user['users'][0]['localId']
+        userDetails = UserModel.get_user_details(localId)
+        return {'userdetails': userDetails}
+

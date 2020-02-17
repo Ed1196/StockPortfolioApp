@@ -14,12 +14,12 @@ api_url = "https://www.alphavantage.co"
 class StockModel():
     def __init__(self, symbol):
         self.symbol = symbol
-        self.open = 0
-        self.high = 0
-        self.low = 0
-        self.close = 0
-        self.volume = 0
-        self.volatility = 0
+        self.open: float = 0
+        self.high: float = 0
+        self.low: float = 0
+        self.close: float = 0
+        self.volume: float = 0
+        self.volatility: float = 0
         self.date = ''
 
     def json(self):

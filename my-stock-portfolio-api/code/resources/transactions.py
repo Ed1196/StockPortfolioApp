@@ -12,12 +12,12 @@ class Transactions(Resource):
 
     # Specify what we want from the payload
     parser.add_argument('quantity',
-                        type=int,
+                        type=float,
                         required=True,
                         help='This field cannot be left blank!')
 
     parser.add_argument('price',
-                        type=int,
+                        type=float,
                         required=True,
                         help='This field cannot be left blank!')
 
@@ -32,8 +32,8 @@ class Transactions(Resource):
         # We store the data that we parsed into a Variable
 
         data = Transactions.parser.parse_args()
-        user = UserModel.find_by_id_token(request.idToken)
-        localId = user['users'][0]['localId']
+        userInfo = UserModel.find_by_id_token(request.idToken)
+        localId = userInfo['users'][0]['localId']
         aproved = UserModel.purchase_stock(data['quantity'], data['price'], data['symbol'], localId)
         if aproved:
             return {'success': True}, 201
