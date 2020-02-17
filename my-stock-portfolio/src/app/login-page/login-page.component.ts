@@ -54,11 +54,18 @@ export class LoginPageComponent implements OnInit {
   onSubmit(){
     this.user = Object.assign({}, this.form.value);
 
-    if(this.userService.userAuthentication(this.user)){
-      this.router.navigate(['/']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.userService.userAuthentication(this.user).subscribe((data : any)=>{
+      
+      if(data.success){
+        console.log(data.idToken)
+        //storing json object to localStorage
+        localStorage.setItem('idToken', data.idToken);
+        this.router.navigate(['/']) 
+      }
+      else{ 
+        this.router.navigate(['/login'])
+    }; 
+    });
 
   }
 

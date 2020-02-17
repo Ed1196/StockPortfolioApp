@@ -14,12 +14,22 @@ import { Component, OnInit, Input } from '@angular/core';
 export class StockPortfolioComponent implements OnInit {
   @Input() card: any;
   @Input() userDetails: UserModel;
+  total: number;
 
 
   constructor(private userService: UserService) {
+    this.userDetails = new UserModel()
+    this.total = 0
   }
 
   ngOnInit() {
+    for(let stock of this.userDetails.stocks){
+      this.total = (stock.quantity * stock.price) + this.total
+    }
+  }
+
+  get_total() {
+    
   }
 
   

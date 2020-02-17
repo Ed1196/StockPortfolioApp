@@ -30,8 +30,12 @@
   }
 
   span {
-    width: 40px;
+    width: flex;
     height: 20px;
     margin: 20px;
     display: inline;
+  }
+
+  .trans-span {
+    
   }

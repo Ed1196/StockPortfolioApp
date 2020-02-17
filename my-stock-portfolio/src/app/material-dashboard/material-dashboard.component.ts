@@ -45,6 +45,7 @@ export class MaterialDashboardComponent implements OnInit{
       this.userDetails.firstname = data.userdetails['firstname']
       this.userDetails.lastname = data.userdetails['lastname']
       this.userDetails.email = data.userdetails['email']
+      this.userDetails.totalportfolio = data.userdetails['totalportfolio']
       
       let transList = data.userdetails['transactions']
       let stockList = data.userdetails['mystocks']

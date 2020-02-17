@@ -1,7 +1,9 @@
 <mat-card class="card">
   <mat-card-header>
-    <mat-card-title>
-        Portfolio ( $ {{total}})
+    <mat-card-title >
+        <h4 > 
+          <span>Portfolio (${{userDetails.totalportfolio}}) </span>
+        </h4>
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
@@ -13,7 +15,7 @@
           <mat-list-item>
               <span class = "name">{{stock.name}}</span>
               <span class = "quantity">{{stock.quantity}}</span>
-              <span class = "price">{{stock.price}}</span>
+              <span class = "price">${{stock.price}}</span>
             </mat-list-item>
         </div>
       </cdk-virtual-scroll-viewport>

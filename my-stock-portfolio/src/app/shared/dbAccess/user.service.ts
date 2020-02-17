@@ -46,19 +46,6 @@ export class UserService {
 
     }
     return this.http.post(requestedUrl,body, {headers: reqHeader})
-    .subscribe((data : any)=>{
-      
-      if(data.success){
-        console.log(data.idToken)
-        //storing json object to localStorage
-        localStorage.setItem('idToken', data.idToken);
-        return true  
-      }
-      else{ 
-         return false
-    }; 
-    });
-
   }
 
   getUserDetails(){

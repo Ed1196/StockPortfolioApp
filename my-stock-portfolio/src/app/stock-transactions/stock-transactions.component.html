@@ -13,16 +13,12 @@
           <mat-list-item>
               <span>BUY</span>
               <span>({{trans.symbol}}) </span>
-              <span>----{{trans.quantity}} </span>
-              <span>@</span>
-              <span>  {{trans.price}}    </span>
+              <span class="trans-span">----{{trans.quantity}} Shares</span>
+              <span><mat-icon>alternate_email</mat-icon></span>
+              <span>  ${{trans.price}}    </span>
             </mat-list-item>
         </div>
       </cdk-virtual-scroll-viewport>
     </mat-list>  
-    
-        
-
-
   </mat-card-content>
 </mat-card>

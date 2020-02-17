@@ -40,4 +40,9 @@ export class StockService {
     return this.http.post(this.rootUrl + "/purchase", body, {headers: reqHeader})
    }
 
+   updateStocks(){
+    var reqHeader = new HttpHeaders({'No-Auth':'False'})
+    return this.http.get(this.rootUrl + "/purchase", {headers: reqHeader})
+   }
+
 }
