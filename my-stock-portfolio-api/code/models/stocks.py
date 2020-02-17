@@ -45,16 +45,14 @@ class StockModel():
         # Time Series: A sequence of numerical data points taken at successuve equally spaced points in time
         # Records the stock price, over a specified period of time
         ts = TimeSeries(key=api_key, output_format='pandas')
-        data, meta_data = ts.get_intraday(symbol=self.symbol, interval='1min', outputsize='full')
+        data, meta_data = ts.get_intraday(symbol=self.symbol, interval='1min', outputsize='compact')
         self.open = data['1. open'][0]
         self.high = data['2. high'][0]
         self.low = data['3. low'][0]
         self.close = data['4. close'][0]
         self.volume = data['5. volume'][0]
-        self.date = meta_data['3. Last Refreshed']
-
+        self.date = str(data.index[0])
         percentage_change = data['4. close'].pct_change()
-
         self.volatility = percentage_change[-1]
 
 
@@ -78,3 +76,18 @@ class StockModel():
         for stock in list:
             ret.append(stock['1. symbol'])
         return ret
+
+    @classmethod
+    def getStockLatestInfo(cls, symbol):
+        ts = TimeSeries(key=api_key, output_format='pandas')
+        data, meta_data = ts.get_intraday(symbol=symbol, interval='1min', outputsize='compact')
+        stock = StockModel(symbol)
+        stock.open = data['1. open'][0]
+        stock.high = data['2. high'][0]
+        stock.low = data['3. low'][0]
+        stock.close = data['4. close'][0]
+        stock.volume = data['5. volume'][0]
+        stock.date = str(data.index[0])
+        return stock.json()
+
+

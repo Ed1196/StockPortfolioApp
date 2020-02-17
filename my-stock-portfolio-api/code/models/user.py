@@ -3,6 +3,7 @@ from collections import OrderedDict
 from decimal import Decimal
 from flask import jsonify
 from datetime import date
+from models.stocks import StockModel
 
 
 class UserModel():
@@ -50,13 +51,13 @@ class UserModel():
         # Calculate new balance
         newBalance = round(Decimal(round(Decimal(currentBalance), 2) - round(Decimal(quantity * price), 2)), 2)
         if newBalance < 0:
-
             return False
         usersInfo = db.child("users").child(localId).child("mystocks").get()
         # STOCK DIRECTORY DOES NOT EXISTS, FIRST TIME BUYER
         if usersInfo.val() is None:
             UserModel.set__balance_stocks(localId, newBalance, symbol, price, quantity)
             UserModel.log_transaction(symbol, quantity, price, localId)
+            UserModel.create_portfolio(localId, quantity, price)
             return True
         # STOCK HAS BEEN PURCHASED BEFORE
         else:
@@ -71,11 +72,13 @@ class UserModel():
                     newQuantity: int = userStocks[1]['quantity'] + quantity
                     UserModel.update_balance_stocks(localId, symbol, price, newQuantity, newBalance)
                     UserModel.log_transaction(symbol, quantity, price, localId)
+                    UserModel.update_portfolio(localId, quantity, price)
                     return True
             # STOCK NOT IN LIST, BUT HAS BOUGHT STOCKS BEFORE
             else:
                 UserModel.set__balance_stocks(localId, newBalance, symbol, price, quantity)
                 UserModel.log_transaction(symbol, quantity, price, localId)
+                UserModel.update_portfolio(localId, quantity, price)
                 return True
 
         return False
@@ -85,7 +88,7 @@ class UserModel():
         user = db.child("users").child(localId).get()
         userDetails = {}
         for details in user.each():
-            userDetails[details.key()] =  details.val()
+            userDetails[details.key()] = details.val()
         return userDetails
 
     @classmethod
@@ -106,9 +109,37 @@ class UserModel():
 
     @classmethod
     def log_transaction(cls, symbol, quantity, price, localId):
-        transaction = {"symbol":symbol, "quantity": quantity, "price":price, }
+        transaction = {"symbol": symbol, "quantity": quantity, "price": price, }
         db.child("users").child(localId).child("transactions").push(transaction)
 
+    @classmethod
+    def create_portfolio(cls, localId, quantity, price):
+        portfolio = quantity * price
+        portfolioValFormat = str(portfolio)
+        db.child("users").child(localId).child("totalportfolio").set(portfolioValFormat)
 
+    @classmethod
+    def update_portfolio(cls, localId, quantity, price):
+        currentPortfolio = db.child("users").child(localId).child("totalportfolio").get().val()
+        # stores stock Tricker Symbol and dic {price, quantity} in a tuple
+        updatePortfolio = Decimal(float(currentPortfolio)) + round(Decimal(quantity * price), 2)
+        portfolioValFormat = str(updatePortfolio)
+        db.child("users").child(localId).child("totalportfolio").set(portfolioValFormat)
 
+    @classmethod
+    def check_stock_changes(cls, localId):
+        userStocks = db.child("users").child(localId).child("mystocks").get()
+        stocksDict = {}
+        for stock in userStocks.each():
+            # Get stock value from db
+            userStocks = (stock.key(), stock.val())
+            # Get stock value from Alpha Vantage API
+            currentStock = StockModel.getStockLatestInfo(userStocks[0])
+            if userStocks[1] != currentStock['close']:
+                db.child("users").child(localId).child("mystocks").child(userStocks[0]).update(
+                    {'price': currentStock['close']})
+                stocksDict[userStocks[0]]= userStocks[1]
+            else:
+                stocksDict[userStocks[0]] = currentStock['close']
 
+        return stocksDict

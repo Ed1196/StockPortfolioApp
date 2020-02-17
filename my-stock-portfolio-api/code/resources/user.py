@@ -72,3 +72,10 @@ class UserInfo(Resource):
         userDetails = UserModel.get_user_details(localId)
         return {'userdetails': userDetails}
 
+
+class UpdateMyStock(Resource):
+    @security.myJWT.requires_auth
+    def get(self):
+        user = UserModel.find_by_id_token(request.idToken)
+        response = UserModel.check_stock_changes(user['users'][0]['localId'])
+        return{'portfolioUpdated': response}

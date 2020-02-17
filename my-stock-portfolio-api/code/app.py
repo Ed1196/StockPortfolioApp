@@ -4,7 +4,7 @@ from flask_jwt import JWT, jwt_required
 from datetime import timedelta
 
 #Endpoint to register user
-from resources.user import UserRegister, UserLogin, UserInfo
+from resources.user import UserRegister, UserLogin, UserInfo, UpdateMyStock
 
 #Endpoint to get stock info
 from resources.stocks import StockRetriever
@@ -37,6 +37,8 @@ api.add_resource(StockRetriever, '/stock')
 api.add_resource(StockSearch, '/stock-search')
 api.add_resource(Transactions, '/purchase')
 api.add_resource(UserInfo, '/userinfo')
+api.add_resource(UpdateMyStock, '/update-info')
+
 
 '''
 @jwt.auth_response_handler

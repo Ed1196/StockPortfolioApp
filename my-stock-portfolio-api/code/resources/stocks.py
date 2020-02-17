@@ -2,6 +2,8 @@ from flask_restful import Resource, reqparse
 from models.stocks import StockModel
 from flask import request
 import security.myJWT
+from models.user import UserModel
+from flask import request
 
 
 class StockRetriever(Resource):
@@ -22,3 +24,7 @@ class StockSearch(Resource):
         query = request.args.get('query').lower()
         stockList = StockModel.searchStock(query)
         return {'success': True, 'stockList': stockList}
+
+
+
+
