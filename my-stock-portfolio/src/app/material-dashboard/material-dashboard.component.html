@@ -3,16 +3,16 @@
   <mat-grid-list cols="2" rowHeight="300px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
 
-      <div *ngIf = "card.title === 'search'">
+      <div *ngIf = "card.title === 'search'" class="search">
         <app-stock-search [card] = "card"></app-stock-search> 
       </div>
 
       <div *ngIf = "card.title === 'portfolio'">
-        <app-stock-portfolio [card] = "card"></app-stock-portfolio> 
+        <app-stock-portfolio [userDetails]= "userDetails"></app-stock-portfolio> 
       </div>
 
       <div *ngIf = "card.title === 'transaction'">
-        <app-stock-transactions [card] = "card"></app-stock-transactions> 
+        <app-stock-transactions [userDetails] = "userDetails"></app-stock-transactions> 
       </div>
 
 

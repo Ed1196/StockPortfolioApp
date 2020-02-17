@@ -30,12 +30,12 @@ export class StockService {
     return this.http.get(this.rootUrl + "/stock", {params: params})
    }
 
-   purchaseStock(quantity, price, idToken){
+   purchaseStock(quantity, price, symbol){
     var reqHeader = new HttpHeaders({'No-Auth':'False'})
     const body = {
       quantity: quantity,
       price: price,
-      idToken: idToken
+      symbol: symbol
     }
     return this.http.post(this.rootUrl + "/purchase", body, {headers: reqHeader})
    }

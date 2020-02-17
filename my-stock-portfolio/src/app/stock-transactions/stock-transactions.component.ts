@@ -1,3 +1,4 @@
+import { UserModel } from 'src/app/shared/models/user.model';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
@@ -7,9 +8,15 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 })
 export class StockTransactionsComponent implements OnInit {
   @Input() card: any;
+
+  @Input()
+  userDetails: UserModel
+
   constructor() { }
 
+
   ngOnInit() {
+    
   }
 
 }

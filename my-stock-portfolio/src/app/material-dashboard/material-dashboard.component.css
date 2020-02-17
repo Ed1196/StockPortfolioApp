@@ -2,9 +2,11 @@
   margin: 20px;
 }
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
 
+.search {
+  margin-top: 30px;
+  width: 90%;
+  height: 100%;
+  
+  
+}

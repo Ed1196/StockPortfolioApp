@@ -39,8 +39,6 @@ export class UserService {
     var reqHeader = new HttpHeaders({'No-Auth':'True'})
     //Adding Parameters to the request
     var requestedUrl= this.rootUrl + "/login"
-    //Token
-    var idToken = ''
     //Request body
     const body: UserModel = {
       email: user.email,
@@ -51,6 +49,7 @@ export class UserService {
     .subscribe((data : any)=>{
       
       if(data.success){
+        console.log(data.idToken)
         //storing json object to localStorage
         localStorage.setItem('idToken', data.idToken);
         return true  
@@ -60,6 +59,16 @@ export class UserService {
     }; 
     });
 
+  }
+
+  getUserDetails(){
+
+    //This request does not need a JWT token
+    var reqHeader = new HttpHeaders({'No-Auth':'False'})
+    //Adding Parameters to the request
+    var requestedUrl= this.rootUrl + "/userinfo"
+  
+    return this.http.get(requestedUrl, {headers: reqHeader})
   }
 
 

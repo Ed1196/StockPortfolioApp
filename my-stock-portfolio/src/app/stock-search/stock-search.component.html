@@ -2,8 +2,9 @@
 
   <mat-card-header>
     <mat-card-title>
-        <mat-form-field>
-          <input 
+        <mat-form-field class = "search" >
+          <input
+            
             matInput 
             type = "text"
             #stockInput
@@ -18,7 +19,7 @@
       <div *cdkVirtualFor = "let stock of filteredStocks" class = "item">
           <mat-list-item> 
             <div class="stock">
-              <app-stock-card [stock] = "stock"></app-stock-card>
+              <app-stock-card  [stock] = "stock"></app-stock-card>
             </div>
           </mat-list-item>
         <mat-divider></mat-divider>

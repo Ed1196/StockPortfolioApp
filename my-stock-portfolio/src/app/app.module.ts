@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MaterialDashboardComponent } from './material-dashboard/material-dashboard.component';
-import { MatGridListModule, MatMenuModule, MatListModule, MatAutocompleteModule, MatDividerModule, MatExpansionModule } from '@angular/material';
+import { MatGridListModule, MatMenuModule, MatListModule, MatAutocompleteModule, MatDividerModule, MatExpansionModule, MatTableModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StockSearchComponent } from './stock-search/stock-search.component';
 import { StockPortfolioComponent } from './stock-portfolio/stock-portfolio.component';
@@ -67,6 +67,7 @@ import { StockCardComponent } from './stock-card/stock-card.component';
     ScrollingModule,
     MatDividerModule,
     MatExpansionModule,
+    MatTableModule,
     
     //HTTP requests
     HttpClientModule,

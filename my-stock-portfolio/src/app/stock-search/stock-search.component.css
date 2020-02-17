@@ -1,16 +1,33 @@
-.card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 3px;
+.mat-card {
+  margin: auto;
+  padding: 1px;
+  max-height:  585px;
+  height: 97%;
+  width: 100%;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  
 }
 
 .viewport {
-  height: 400px;
+  height: 84%;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+}
+
+.mat-card-content {
+  height: 100%;
+}
+.mat-card-header {
+  margin: 0px;
+  background-color: rgba(189, 189, 189, 0.2);
+  border-radius: 20px;
+}
+
+.search{
+  min-width: 580px;
+  max-width: 700px;
   width: 100%;
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
   
 }
 

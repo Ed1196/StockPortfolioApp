@@ -4,7 +4,25 @@
         Transactions
     </mat-card-title>
   </mat-card-header>
+  <mat-divider></mat-divider>
   <mat-card-content class="card-content">
+
+    <mat-list>
+      <cdk-virtual-scroll-viewport itemSize="50" class = "viewport">
+        <div *cdkVirtualFor = "let trans of userDetails.transactions">
+          <mat-list-item>
+              <span>BUY</span>
+              <span>({{trans.symbol}}) </span>
+              <span>----{{trans.quantity}} </span>
+              <span>@</span>
+              <span>  {{trans.price}}    </span>
+            </mat-list-item>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </mat-list>  
+    
         
+
+
   </mat-card-content>
 </mat-card>

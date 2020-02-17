@@ -1,3 +1,5 @@
+import { UserService } from './../shared/dbAccess/user.service';
+import { UserModel, Stock } from './../shared/models/user.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  userDetails: UserModel 
+  
+
+  constructor(private userService: UserService) { 
+    this.userDetails = new UserModel;
+
+  }
 
   ngOnInit() {
+    
   }
 
 
