@@ -7,7 +7,6 @@ from donotexport.myKey import MyKey
 
 # Remove when in production
 key = MyKey()
-api_key = key.returnKey()
 api_url = "https://www.alphavantage.co"
 
 
@@ -19,9 +18,8 @@ class StockModel():
         self.low: float = 0
         self.close: float = 0
         self.volume: float = 0
-        self.volatility: float = 0
-        self.date = ''
-        self.percent = ''
+        self.change: float = 0
+
 
     def json(self):
         return {
@@ -32,29 +30,25 @@ class StockModel():
             'low': self.low,
             'close': self.close,
             'volume': self.volume,
-            'volatility': self.volatility,
-            'date': self.date
+            'date': self.date,
+            'change': self.change
         }
 
-    # Day trading. We get the bolatility of the stock of any given minute.
-    def getStockVolatility(self):
-        # Time Series: A sequence of numerical data points taken at successuve equally spaced points in time
-        # Records the stock price, over a specified period of time
-        pass
-
     def getStockInfo(self):
-        # Time Series: A sequence of numerical data points taken at successuve equally spaced points in time
-        # Records the stock price, over a specified period of time
-        ts = TimeSeries(key=api_key, output_format='pandas')
-        data, meta_data = ts.get_intraday(symbol=self.symbol, interval='1min', outputsize='compact')
-        self.open = data['1. open'][0]
-        self.high = data['2. high'][0]
-        self.low = data['3. low'][0]
-        self.close = data['4. close'][0]
-        self.volume = data['5. volume'][0]
-        self.date = str(data.index[0])
-        percentage_change = data['4. close'].pct_change()
-        self.volatility = percentage_change[-1]
+        api_key = key.returnKey()
+        try:
+            ts = TimeSeries(key=api_key, output_format='pandas')
+            data, meta_data = ts.get_quote_endpoint(symbol=self.symbol)
+        except:
+            return False
+        self.open = float(data['02. open'][0])
+        self.high = float(data['03. high'][0])
+        self.low = float(data['04. low'][0])
+        self.close = float(data['05. price'][0])
+        self.volume = float(data['06. volume'][0])
+        self.date = str(data['07. latest trading day'][0])
+        self.change = float(data['09. change'])
+        return True
 
 
     @classmethod
@@ -66,7 +60,10 @@ class StockModel():
             query: string, required
         :return string:
         """
+        api_key = key.returnKey()
         response = requests.get(api_url + "/query?function=SYMBOL_SEARCH&keywords=" + query + "&apikey=" + api_key)
+        if 'Note' in response.json():
+            return False
         stockList = response.json()
         list = stockList['bestMatches']
         ret = []
@@ -80,8 +77,13 @@ class StockModel():
 
     @classmethod
     def getStockLatestInfo(cls, symbol):
-        ts = TimeSeries(key=api_key, output_format='pandas')
-        data, meta_data = ts.get_quote_endpoint(symbol=symbol)
+        api_key = key.returnKey()
+        print(api_key)
+        try:
+            ts = TimeSeries(key=api_key, output_format='pandas')
+            data, meta_data = ts.get_quote_endpoint(symbol=symbol)
+        except:
+            return False
         stock = StockModel(data['01. symbol'][0])
         stock.open = float(data['02. open'][0])
         stock.high = float(data['03. high'][0])
@@ -89,6 +91,7 @@ class StockModel():
         stock.close = float(data['05. price'][0])
         stock.volume = float(data['06. volume'][0])
         stock.date = str(data['07. latest trading day'][0])
+        stock.change = float(data['09. change'])
         return stock.json()
 
 

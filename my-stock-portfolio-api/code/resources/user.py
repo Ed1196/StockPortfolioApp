@@ -78,4 +78,30 @@ class UpdateMyStock(Resource):
     def get(self):
         user = UserModel.find_by_id_token(request.idToken)
         response = UserModel.check_stock_changes(user['users'][0]['localId'])
-        return{'mystocks': response[0], 'portfolio': response[1]}
+        if not response:
+            return {'success': False,
+                    'message': "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Please wait."}
+        return {'mystocks': response[0], 'portfolio': response[1], 'success': True}
+
+
+
+
+class UpdateMyStockCompact(Resource):
+    # Variable that will allow us to parse the data when given a request
+    parser = reqparse.RequestParser()
+
+    parser.add_argument('stocks',
+                        type=list,
+                        required=True,
+                        help='This field cannot be left blank!')
+
+    @security.myJWT.requires_auth
+    def get(self):
+        data = UpdateMyStockCompact.parser.parse_args()
+        print(data)
+        user = UserModel.find_by_id_token(request.idToken)
+        response = UserModel.check_stock_changes_compact(user['users'][0]['localId'], data['stocks'])
+        if not response:
+            return {'success': False,
+                    'message': "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Please wait."}
+        return {'mystocks': response[0], 'portfolio': response[1], 'success': True}

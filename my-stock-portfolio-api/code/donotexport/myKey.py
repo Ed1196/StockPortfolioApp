@@ -1,7 +1,8 @@
+import random
+
 class MyKey():
     def __init__(self):
-        self.key2 = 'M3AVG22OXELHTROF'
-        self.key = '9J06ND1RN37ROG4Y'
+        self.keys = ['M3AVG22OXELHTROF', '9J06ND1RN37ROG4Y','2UE755N80C9RRTX6']
 
     def returnKey(self):
-        return self.key2
+        return random.choice(self.keys)

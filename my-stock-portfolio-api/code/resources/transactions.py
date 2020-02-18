@@ -26,6 +26,11 @@ class Transactions(Resource):
                         required=True,
                         help='This field cannot be left blank!')
 
+    parser.add_argument('open',
+                        type=float,
+                        required=True,
+                        help='This field cannot be left blank!')
+
     # Post Request
     @security.myJWT.requires_auth
     def post(self):
@@ -34,7 +39,8 @@ class Transactions(Resource):
         data = Transactions.parser.parse_args()
         tokenInfo = UserModel.find_by_id_token(request.idToken)
         localId = tokenInfo['users'][0]['localId']
-        aproved = UserModel.purchase_stock(data['quantity'], data['price'], data['symbol'], localId)
+
+        aproved = UserModel.purchase_stock(data['quantity'], data['price'], data['symbol'], localId, data['open'])
         userDetails = UserModel.get_user_details(localId)
 
         if aproved:

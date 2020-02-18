@@ -13,7 +13,10 @@ class StockRetriever(Resource):
         symbol = request.args.get("symbol")
         # We store the data that we parsed into a Variable
         stock = StockModel(symbol)
-        stock.getStockInfo()
+        response = stock.getStockInfo()
+        if not response:
+            return {'success': False,
+                    'message': "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Please wait."}
         return stock.json()
 
 
@@ -23,6 +26,9 @@ class StockSearch(Resource):
     def get(self):
         query = request.args.get('query').lower()
         stockList = StockModel.searchStock(query)
+        if not stockList:
+            return {'success': False,
+                    'message': "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Please wait."}
         return {'success': True, 'stockList': stockList}
 
 

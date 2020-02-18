@@ -43,7 +43,7 @@ class UserModel():
         return self.user['idToken']
 
     @classmethod
-    def purchase_stock(cls, quantity, price: float, symbol, localId):
+    def purchase_stock(cls, quantity, price: float, symbol, localId, open):
         # Retrieve user account
         user = db.child("users").child(localId).child("account")
         # Retrieve the account balance
@@ -55,7 +55,7 @@ class UserModel():
         usersInfo = db.child("users").child(localId).child("mystocks").get()
         # STOCK DIRECTORY DOES NOT EXISTS, FIRST TIME BUYER
         if usersInfo.val() is None:
-            UserModel.set__balance_stocks(localId, newBalance, symbol, price, quantity)
+            UserModel.set__balance_stocks(localId, newBalance, symbol, price, quantity, open)
             UserModel.log_transaction(symbol, quantity, price, localId)
             UserModel.create_portfolio(localId, quantity, price)
 
@@ -71,13 +71,13 @@ class UserModel():
                     # Add the quantity in of the stock in the portfolio and the quantity of the stocks user is trying to
                     # purchase
                     newQuantity: int = userStocks[1]['quantity'] + quantity
-                    UserModel.update_balance_stocks(localId, symbol, price, newQuantity, newBalance)
+                    UserModel.update_balance_stocks(localId, symbol, price, newQuantity, newBalance, open)
                     UserModel.log_transaction(symbol, quantity, price, localId)
                     UserModel.update_portfolio(localId, quantity, price)
                     return True
             # STOCK NOT IN LIST, BUT HAS BOUGHT STOCKS BEFORE
             else:
-                UserModel.set__balance_stocks(localId, newBalance, symbol, price, quantity)
+                UserModel.set__balance_stocks(localId, newBalance, symbol, price, quantity, open)
                 UserModel.log_transaction(symbol, quantity, price, localId)
                 UserModel.update_portfolio(localId, quantity, price)
                 return True
@@ -97,20 +97,21 @@ class UserModel():
         return auth.get_account_info(userId)
 
     @classmethod
-    def set__balance_stocks(cls, localId, newBalance, symbol, price, quantity):
+    def set__balance_stocks(cls, localId, newBalance, symbol, price, quantity, open):
         db.child("users").child(localId).update({"account": str(newBalance)})
-        db.child("users").child(localId).child("mystocks").child(symbol).set({"price": price, "quantity": quantity})
+        transaction = {"symbol": symbol, "quantity": quantity, "price": price, "open": open}
+        db.child("users").child(localId).child("mystocks").child(symbol).set(transaction)
 
     @classmethod
-    def update_balance_stocks(cls, localId, symbol, price, newQuantity, newBalance):
+    def update_balance_stocks(cls, localId, symbol, price, newQuantity, newBalance, open):
         # Update to firebase
-        db.child("users").child(localId).child("mystocks").child(symbol).update(
-            {"price": price, "quantity": newQuantity})
+        transaction = {"symbol": symbol, "quantity": newQuantity, "price": price, "open": open}
+        db.child("users").child(localId).child("mystocks").child(symbol).update(transaction)
         db.child("users").child(localId).update({"account": str(newBalance)})
 
     @classmethod
     def log_transaction(cls, symbol, quantity, price, localId):
-        transaction = {"symbol": symbol, "quantity": quantity, "price": price, }
+        transaction = {"symbol": symbol, "quantity": quantity, "price": price}
         db.child("users").child(localId).child("transactions").push(transaction)
 
     @classmethod
@@ -135,23 +136,74 @@ class UserModel():
         for stock in userStocks.each():
             # Get stock value from db
             userStocks = (stock.key(), stock.val())
-            # Get stock value from Alpha Vantage API
-            currentStock = StockModel.getStockLatestInfo(userStocks[0])
-            print("Current Stock", currentStock)
+            try:
+                # Get stock value from Alpha Vantage API
+                currentStock = StockModel.getStockLatestInfo(userStocks[0])
+            except:
+                return False
+
+            if not currentStock:
+                return False
+
             if userStocks[1]['price'] != currentStock['close']:
                 db.child("users").child(localId).child("mystocks").child(userStocks[0]).update(
                     {'price': currentStock['close']})
                 stocksDict[userStocks[0]] = {"price": currentStock['close'],
                                              "quantity": userStocks[1]['quantity'], "open": currentStock['open']}
 
-                print("IF",userStocks[1]['quantity'], currentStock['close'])
                 currentPortfolio = currentPortfolio + round(Decimal(userStocks[1]['quantity'] * currentStock['close']), 2)
             else:
                 stocksDict[userStocks[0]] = {"price": userStocks[1]['price'],
                                              "quantity": userStocks[1]['quantity'], "open": currentStock['open']}
-
-                print("ELSE",userStocks[1]['quantity'], userStocks[1]['price'])
                 currentPortfolio = currentPortfolio + round(Decimal(userStocks[1]['quantity'] * userStocks[1]['price']), 2)
 
+            db.child("users").child(localId).child("mystocks").child(userStocks[0]).child("open").set(currentStock['open'])
+
         db.child("users").child(localId).child("totalportfolio").set(str(currentPortfolio))
+
+        return (stocksDict, str(currentPortfolio))
+
+    @classmethod
+    def check_stock_changes_compact(cls, localId, stockList):
+        userStocks = db.child("users").child(localId).child("mystocks").get()
+        currentPortfolio: float = 0
+        stocksDict = {}
+        print(stockList)
+        for stock in userStocks.each():
+            # Get stock value from db
+            userStocks = (stock.key(), stock.val())
+
+
+            if stock in stockList:
+                try:
+                    # Get stock value from Alpha Vantage API
+                    currentStock = StockModel.getStockLatestInfo(userStocks[0])
+                    print("APLHA API HIT")
+                except:
+                    return False
+            else:
+                currentStock = userStocks[1]
+
+            if not currentStock:
+                return False
+
+            if userStocks[1]['price'] != currentStock['price']:
+                db.child("users").child(localId).child("mystocks").child(userStocks[0]).update(
+                    {'price': currentStock['price']})
+                stocksDict[userStocks[0]] = {"price": currentStock['price'],
+                                             "quantity": userStocks[1]['quantity'], "open": currentStock['open']}
+
+                currentPortfolio = currentPortfolio + round(Decimal(userStocks[1]['quantity'] * currentStock['price']),
+                                                            2)
+            else:
+                stocksDict[userStocks[0]] = {"price": userStocks[1]['price'],
+                                             "quantity": userStocks[1]['quantity'], "open": currentStock['open']}
+                currentPortfolio = currentPortfolio + round(Decimal(userStocks[1]['quantity'] * userStocks[1]['price']),
+                                                            2)
+
+            db.child("users").child(localId).child("mystocks").child(userStocks[0]).child("open").set(
+                currentStock['open'])
+
+        db.child("users").child(localId).child("totalportfolio").set(str(currentPortfolio))
+
         return (stocksDict, str(currentPortfolio))
