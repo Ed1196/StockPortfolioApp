@@ -46,6 +46,7 @@ export class MaterialDashboardComponent implements OnInit{
       this.userDetails = new UserModel;
 
       this.userService.getUserDetails().subscribe((data: any) => {
+      this.userDetails.account = data.userdetails['account']
       this.userDetails.firstname = data.userdetails['firstname']
       this.userDetails.lastname = data.userdetails['lastname']
       this.userDetails.email = data.userdetails['email']
@@ -64,7 +65,9 @@ export class MaterialDashboardComponent implements OnInit{
         stockInterface.open = stockList[stock]['open']
         tempList.push(stockInterface)
       }
-      this.userDetails.stocks = tempList
+      console.log(tempList)
+      this.userDetails.stocks = tempList.reverse()
+      console.log(tempList)
 
       let tempList2: Transaction[] = []
       for (let trans in transList){
@@ -74,7 +77,7 @@ export class MaterialDashboardComponent implements OnInit{
         transInterface.quantity = transList[trans]['quantity']
         tempList2.push(transInterface)
       }
-      this.userDetails.transactions = tempList2
+      this.userDetails.transactions = tempList2.reverse()
     })
       
   }

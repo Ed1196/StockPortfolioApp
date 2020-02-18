@@ -20,5 +20,6 @@ export class UserModel {
     stocks ?: Stock[];
     transactions ?: Transaction[];
     totalportfolio ?: string;
+    account ?: number;
     
 }

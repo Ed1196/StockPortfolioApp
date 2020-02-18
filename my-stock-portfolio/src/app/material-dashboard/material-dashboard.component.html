@@ -1,5 +1,9 @@
 <div class="grid-container">
-  <span class="mat-h1">DASHBOARD</span>
+  <div>
+    <span><button class="balance" mat-flat-button>BALANCE: {{userDetails.account }}</button></span>
+  </div>
+  
+  
   <mat-grid-list cols="2" rowHeight="300px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
 

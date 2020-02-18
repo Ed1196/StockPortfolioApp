@@ -45,6 +45,7 @@ export class StockCardComponent implements OnInit {
   purchase(quantity:number) {
     this.stockService.purchaseStock(quantity, this.stockData['close'], this.stockData['symbol'], this.stockData['open'])
       .subscribe((data:any) => { 
+        this.userDetails.account = data.userdetails['account']
         this.userDetails.firstname = data.userdetails['firstname']
         this.userDetails.lastname = data.userdetails['lastname']
         this.userDetails.email = data.userdetails['email']
@@ -60,9 +61,10 @@ export class StockCardComponent implements OnInit {
           stockInterface.name = stock;
           stockInterface.price = stockList[stock]['price']
           stockInterface.quantity = stockList[stock]['quantity']
+          stockInterface.open = stockList[stock]['open']
           tempList.push(stockInterface)
         }
-        this.userDetails.stocks = tempList
+        this.userDetails.stocks = tempList.reverse()
 
         let tempList2: Transaction[] = []
         for (let trans in transList){
@@ -72,7 +74,7 @@ export class StockCardComponent implements OnInit {
           transInterface.quantity = transList[trans]['quantity']
           tempList2.push(transInterface)
         }
-        this.userDetails.transactions = tempList2
+        this.userDetails.transactions = tempList2.reverse()
       
       })
   }

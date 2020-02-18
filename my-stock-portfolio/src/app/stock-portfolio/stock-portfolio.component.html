@@ -1,32 +1,31 @@
 <mat-card class="card">
   <mat-card-header>
     <mat-card-title >
-        <h4 > 
-          <span>Portfolio (${{userDetails.totalportfolio}}) </span>
+        <h4> 
+          <span >Portfolio (${{userDetails.totalportfolio}}) </span>
         </h4>
     </mat-card-title>
+    <mat-paginator [length]="100"
+                       [pageSize] = "4"
+                       (page) = "pE = loadData($event)"
+                       #paginator>   
+    </mat-paginator>
   </mat-card-header>
+
+
   <mat-divider></mat-divider>
+
+
   <mat-card-content class="card-content">
 
-    <mat-list>
-      <cdk-virtual-scroll-viewport itemSize="50" class = "viewport">
 
+      <mat-list>
+        <mat-list-item 
+        *ngFor = "let stock of userDetails.stocks | slice:start:end">
+          <app-portfolio-card [stock]="stock"></app-portfolio-card>
+        </mat-list-item>
+      </mat-list>
 
-        
-        
-          <div *cdkVirtualFor = "let stock of userDetails.stocks">
-            <mat-list-item >
-              <app-portfolio-card [stock]="stock"></app-portfolio-card>
-              </mat-list-item>
-          </div>
           
-
-
-
-      </cdk-virtual-scroll-viewport>
-    </mat-list>  
-    
-        
   </mat-card-content>
 </mat-card>

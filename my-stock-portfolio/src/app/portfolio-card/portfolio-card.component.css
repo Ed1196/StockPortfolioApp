@@ -1,6 +1,9 @@
 span {
-    width: 40px;
+    width: 100px;
     height: 20px;
     margin: 20px;
-    display: inline;
+    margin-top: 5px;
+    display: inline-block;
+    font: 700 15px/28px Roboto,"Helvetica Neue",sans-serif;
+    
   }

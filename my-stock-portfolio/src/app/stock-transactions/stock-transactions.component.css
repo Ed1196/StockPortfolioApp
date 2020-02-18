@@ -30,12 +30,9 @@
   }
 
   span {
-    width: flex;
+    width: 85px;
     height: 20px;
     margin: 20px;
-    display: inline;
-  }
-
-  .trans-span {
-    
+    display: inline-block;
+    font: 700 15px/28px Roboto,"Helvetica Neue",sans-serif;
   }
