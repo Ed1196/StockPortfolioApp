@@ -78,4 +78,4 @@ class UpdateMyStock(Resource):
     def get(self):
         user = UserModel.find_by_id_token(request.idToken)
         response = UserModel.check_stock_changes(user['users'][0]['localId'])
-        return{'portfolioUpdated': response}
+        return{'mystocks': response[0], 'portfolio': response[1]}

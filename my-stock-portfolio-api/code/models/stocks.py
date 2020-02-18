@@ -21,6 +21,7 @@ class StockModel():
         self.volume: float = 0
         self.volatility: float = 0
         self.date = ''
+        self.percent = ''
 
     def json(self):
         return {
@@ -80,14 +81,15 @@ class StockModel():
     @classmethod
     def getStockLatestInfo(cls, symbol):
         ts = TimeSeries(key=api_key, output_format='pandas')
-        data, meta_data = ts.get_intraday(symbol=symbol, interval='1min', outputsize='compact')
-        stock = StockModel(symbol)
-        stock.open = data['1. open'][0]
-        stock.high = data['2. high'][0]
-        stock.low = data['3. low'][0]
-        stock.close = data['4. close'][0]
-        stock.volume = data['5. volume'][0]
-        stock.date = str(data.index[0])
+        data, meta_data = ts.get_quote_endpoint(symbol=symbol)
+        stock = StockModel(data['01. symbol'][0])
+        stock.open = float(data['02. open'][0])
+        stock.high = float(data['03. high'][0])
+        stock.low = float(data['04. low'][0])
+        stock.close = float(data['05. price'][0])
+        stock.volume = float(data['06. volume'][0])
+        stock.date = str(data['07. latest trading day'][0])
         return stock.json()
+
 
 

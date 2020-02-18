@@ -32,10 +32,12 @@ class Transactions(Resource):
         # We store the data that we parsed into a Variable
 
         data = Transactions.parser.parse_args()
-        userInfo = UserModel.find_by_id_token(request.idToken)
-        localId = userInfo['users'][0]['localId']
+        tokenInfo = UserModel.find_by_id_token(request.idToken)
+        localId = tokenInfo['users'][0]['localId']
         aproved = UserModel.purchase_stock(data['quantity'], data['price'], data['symbol'], localId)
+        userDetails = UserModel.get_user_details(localId)
+
         if aproved:
-            return {'success': True}, 201
+            return {'success': True, 'userdetails': userDetails}, 201
 
         return {'success': False}, 201
