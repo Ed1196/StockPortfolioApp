@@ -62,7 +62,6 @@ export class RegisterPageComponent implements OnInit {
     
     this.userService.registerUser(this.user)
     .subscribe((data:any) => {
-      console.log(data)
     });
 
   }

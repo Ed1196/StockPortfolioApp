@@ -43,7 +43,7 @@ export class StockCardComponent implements OnInit {
 
   //Class StockService and function purchaseStock 
   purchase(quantity:number) {
-    this.stockService.purchaseStock(quantity, this.stockData['close'], this.stockData['symbol'])
+    this.stockService.purchaseStock(quantity, this.stockData['close'], this.stockData['symbol'], this.stockData['open'])
       .subscribe((data:any) => { 
         this.userDetails.firstname = data.userdetails['firstname']
         this.userDetails.lastname = data.userdetails['lastname']

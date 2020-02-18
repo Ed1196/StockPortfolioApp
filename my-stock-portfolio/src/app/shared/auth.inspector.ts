@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
         //If the request doesn't need auth; use this.
         //req.headers.get('No-Auth') :  This checks the header of the request
         //next.handle(req.clone()) : clone the whole request and send it
-        console.log(req.url)
         if (req.headers.get('No-Auth') == "True")
             return next.handle(req.clone());
 

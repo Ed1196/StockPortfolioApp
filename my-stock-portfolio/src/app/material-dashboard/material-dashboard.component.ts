@@ -41,9 +41,11 @@ export class MaterialDashboardComponent implements OnInit{
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private dataService: DataService) {
-      this.userDetails = new UserModel;
-      this.userService.getUserDetails().subscribe((data: any) => {
 
+
+      this.userDetails = new UserModel;
+
+      this.userService.getUserDetails().subscribe((data: any) => {
       this.userDetails.firstname = data.userdetails['firstname']
       this.userDetails.lastname = data.userdetails['lastname']
       this.userDetails.email = data.userdetails['email']
@@ -59,6 +61,7 @@ export class MaterialDashboardComponent implements OnInit{
         stockInterface.name = stock;
         stockInterface.price = stockList[stock]['price']
         stockInterface.quantity = stockList[stock]['quantity']
+        stockInterface.open = stockList[stock]['open']
         tempList.push(stockInterface)
       }
       this.userDetails.stocks = tempList
@@ -72,7 +75,6 @@ export class MaterialDashboardComponent implements OnInit{
         tempList2.push(transInterface)
       }
       this.userDetails.transactions = tempList2
-
     })
       
   }
@@ -86,7 +88,6 @@ export class MaterialDashboardComponent implements OnInit{
   GetOutputVal(userDetails: UserModel){
     if(userDetails)
     {
-      console.log('Parent',userDetails.stocks)
       this.userDetails = userDetails
     }
   }

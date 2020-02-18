@@ -26,35 +26,38 @@ export class StockPortfolioComponent implements OnInit {
               private stockService: StockService) {
     this.userDetails = new UserModel(),
     this.total = 0
-    interval(4*30000).subscribe ( x => {
-      console.log("Its been a minute")
-      this.stockService.updateStocks().subscribe((data) => {
-        let tempList: Stock[] = []
-
-        for (let stock in data['mystocks']){
-          let stockInterface = new Stock;
-          stockInterface.name = stock;
-          stockInterface.price = data['mystocks'][stock]['price']
-          stockInterface.quantity = data['mystocks'][stock]['quantity']
-          tempList.push(stockInterface)
-        }
-        this.userDetails.stocks = tempList
-        this.userDetails.totalportfolio = data['portfolio']
-        this.NotificationToParent(this.userDetails)
-
-        
-      })
+    interval(6*30000).subscribe ( x => {
+      this.getData()
     })
   }
 
   ngOnInit() {
-    for(let stock of this.userDetails.stocks){
-      this.total = (stock.quantity * stock.price) + this.total
-    }
+
   }
 
   NotificationToParent(userDetails: UserModel) {
     this.outputToParent.emit(userDetails)
+  }
+
+  getData(){
+    this.stockService.updateStocks().subscribe((data) => {
+      let tempList: Stock[] = []
+
+      
+      for (let stock in data['mystocks']){
+        let stockInterface = new Stock;
+        stockInterface.name = stock;
+        stockInterface.price = data['mystocks'][stock]['price']
+        stockInterface.quantity = data['mystocks'][stock]['quantity']
+        stockInterface.open = data['mystocks'][stock]['open']
+        tempList.push(stockInterface)
+      }
+      this.userDetails.stocks = tempList
+      this.userDetails.totalportfolio = data['portfolio']
+      this.NotificationToParent(this.userDetails)
+ 
+    })
+    
   }
 
   

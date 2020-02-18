@@ -57,7 +57,6 @@ export class LoginPageComponent implements OnInit {
     this.userService.userAuthentication(this.user).subscribe((data : any)=>{
       
       if(data.success){
-        console.log(data.idToken)
         //storing json object to localStorage
         localStorage.setItem('idToken', data.idToken);
         this.router.navigate(['/']) 

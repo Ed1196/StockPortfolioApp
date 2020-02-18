@@ -1,13 +1,15 @@
 export class Stock {
-    name: string
-    price: number
-    quantity: number
+    name ?: string
+    price ?: number
+    quantity ?: number
+    open ?: number
+
 }
 
 export class Transaction {
-    symbol: string
-    quantity: number
-    price: number
+    symbol ?: string
+    quantity ?: number
+    price ?: number
 }
 
 export class UserModel {
