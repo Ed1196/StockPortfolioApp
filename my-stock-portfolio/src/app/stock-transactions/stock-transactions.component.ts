@@ -1,3 +1,5 @@
+import { Stock, Transaction } from './../shared/models/user.model';
+import { DataService } from './../shared/services/data.service';
 import { UserModel } from 'src/app/shared/models/user.model';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
@@ -12,11 +14,17 @@ export class StockTransactionsComponent implements OnInit {
   @Input()
   userDetails: UserModel
 
-  constructor() { }
+  constructor(
+    private dataService: DataService
+    ) { }
 
 
   ngOnInit() {
-    
+    this.dataService.currentData.subscribe((data: any) => {
+
+      this.userDetails = data
+
+    })
   }
 
 }

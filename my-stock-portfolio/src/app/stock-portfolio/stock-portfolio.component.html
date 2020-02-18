@@ -12,7 +12,7 @@
     <mat-list>
       <cdk-virtual-scroll-viewport itemSize="50" class = "viewport">
         <div *cdkVirtualFor = "let stock of userDetails.stocks">
-          <mat-list-item>
+          <mat-list-item style="color:red">
               <span class = "name">{{stock.name}}</span>
               <span class = "quantity">{{stock.quantity}}</span>
               <span class = "price">${{stock.price}}</span>

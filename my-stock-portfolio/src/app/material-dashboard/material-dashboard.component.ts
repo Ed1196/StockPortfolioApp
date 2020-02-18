@@ -1,3 +1,4 @@
+import { DataService } from './../shared/services/data.service';
 import { Stock, Transaction } from './../shared/models/user.model';
 import { UserService } from './../shared/dbAccess/user.service';
 import { UserModel } from 'src/app/shared/models/user.model';
@@ -38,7 +39,8 @@ export class MaterialDashboardComponent implements OnInit{
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private userService: UserService) {
+    private userService: UserService,
+    private dataService: DataService) {
       this.userDetails = new UserModel;
       this.userService.getUserDetails().subscribe((data: any) => {
 
@@ -72,14 +74,20 @@ export class MaterialDashboardComponent implements OnInit{
       this.userDetails.transactions = tempList2
 
     })
-    
-    
-    
       
   }
 
   ngOnInit() {
+    this.dataService.currentData.subscribe((data: UserModel) =>{
+      this.userDetails = data
+    })
+  }
 
-    
+  GetOutputVal(userDetails: UserModel){
+    if(userDetails)
+    {
+      console.log('Parent',userDetails.stocks)
+      this.userDetails = userDetails
+    }
   }
 }
