@@ -4,6 +4,7 @@ import { UserService } from './../shared/dbAccess/user.service';
 import { Stock } from './../shared/models/user.model';
 import { UserModel } from 'src/app/shared/models/user.model';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
 
 
@@ -20,6 +21,7 @@ export class StockPortfolioComponent implements OnInit {
   total: number;
   @Output() outputToParent = new EventEmitter<UserModel>();
   isColor: string;
+  pageEvent: PageEvent
 
 
   constructor(private userService: UserService,

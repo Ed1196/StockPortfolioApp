@@ -13,14 +13,17 @@
       <cdk-virtual-scroll-viewport itemSize="50" class = "viewport">
 
 
-        <div *cdkVirtualFor = "let stock of userDetails.stocks">
-          <mat-list-item >
-            <app-portfolio-card [stock]="stock"></app-portfolio-card>
-            </mat-list-item>
-        </div>
-
-
         
+        
+          <div *cdkVirtualFor = "let stock of userDetails.stocks">
+            <mat-list-item >
+              <app-portfolio-card [stock]="stock"></app-portfolio-card>
+              </mat-list-item>
+          </div>
+          
+
+
+
       </cdk-virtual-scroll-viewport>
     </mat-list>  
     
