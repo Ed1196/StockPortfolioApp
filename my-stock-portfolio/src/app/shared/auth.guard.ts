@@ -10,14 +10,17 @@ export class AuthGuard implements CanActivate {
   constructor(private router : Router, private service : UserService){}
 
   canActivate():  boolean {
-    if ( localStorage.getItem('idToken') == null ){
+
+    let refreshToken = localStorage.getItem('refreshToken')
+    console.log(refreshToken)
+    if(refreshToken !== null){
+      return true
+    } else {
       this.router.navigate(["/login"]) 
-      return false;
+      return false
     }
-    else{    
-     
-      return true;
-    } 
+      
+
   }
 
 

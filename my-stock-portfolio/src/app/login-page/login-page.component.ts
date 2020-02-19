@@ -67,6 +67,7 @@ export class LoginPageComponent implements OnInit {
       if(data.success){
         //storing json object to localStorage
         localStorage.setItem('idToken', data.idToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
         this.router.navigate(['/home']) 
       } else {
         this.openSnackBar(data.message)

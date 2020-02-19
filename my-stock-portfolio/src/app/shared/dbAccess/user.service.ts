@@ -48,6 +48,16 @@ export class UserService {
     return this.http.post(requestedUrl,body, {headers: reqHeader})
   }
 
+  refreshToken(refreshToken:string) {
+    var reqHeader = new HttpHeaders({'No-Auth':'False'})
+    var requestedUrl= this.rootUrl + "/refresh-token"
+    const body = {
+      refreshToken: refreshToken,
+
+    }
+    return this.http.post(requestedUrl,body, {headers: reqHeader})
+  }
+
   getUserDetails(){
 
     //This request does not need a JWT token
