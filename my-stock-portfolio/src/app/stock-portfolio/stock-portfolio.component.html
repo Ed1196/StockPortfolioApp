@@ -2,14 +2,15 @@
   <mat-card-header>
     <mat-card-title >
         <h4> 
-          <span>Portfolio (${{userDetails.totalportfolio}}) </span>
+          <span>Portfolio(${{userDetails.totalportfolio}}) </span>
         </h4>
     </mat-card-title>
     <mat-paginator [length]="100"
                        [pageSize] = "4"
-                       (page) = "pE = loadData($event)"
+                       (page) = "loadData($event)"
                        #paginator>   
     </mat-paginator>
+    <button class="real-time" mat-stroked-button color="primary" (click)= "changeUpdateType()"> {{currentUpdateState}}</button>
   </mat-card-header>
 
 

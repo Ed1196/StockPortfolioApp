@@ -4,7 +4,7 @@ from flask_jwt import JWT, jwt_required
 from datetime import timedelta
 
 #Endpoint to register user
-from resources.user import UserRegister, UserLogin, UserInfo, UpdateMyStock, UpdateMyStockCompact
+from resources.user import UserRegister, UserLogin, UserInfo, UpdateMyStock, UpdateMyStockCompact, TokenRefresh
 
 #Endpoint to get stock info
 from resources.stocks import StockRetriever
@@ -22,10 +22,10 @@ api = Api(app)
 #It will enable CORS support on all routes, for all origins and methods.
 CORS(app)
 
-@app.route('/')
-@app.route('/hello')
-def HelloWord():
-    return "Hello World"
+# Root
+@app.route("/", methods=['GET'])
+def helloWorld():
+    return "Welcome to the Stock Portfolio API. There's nothing to see here."
 
 #Decryption Key
 app.secret_key = 'Edwin'
@@ -39,6 +39,7 @@ api.add_resource(Transactions, '/purchase')
 api.add_resource(UserInfo, '/userinfo')
 api.add_resource(UpdateMyStock, '/update-info')
 api.add_resource(UpdateMyStockCompact, '/update-info-compact')
+api.add_resource(TokenRefresh, '/refresh-token')
 
 
 '''

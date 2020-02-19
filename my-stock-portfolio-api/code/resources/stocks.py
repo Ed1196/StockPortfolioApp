@@ -16,7 +16,7 @@ class StockRetriever(Resource):
         response = stock.getStockInfo()
         if not response:
             return {'success': False,
-                    'message': "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Please wait."}
+                    'message': "Alpha Vantage Api call frequency of 5 per minute or 500 per day has been hit. Please wait."}
         return stock.json()
 
 

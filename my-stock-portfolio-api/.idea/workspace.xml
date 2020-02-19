@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2c9ccd17-6eb2-4a1c-9dcf-b1cd4edfcf18" name="Default Changelist" comment="" />
+    <list default="true" id="2c9ccd17-6eb2-4a1c-9dcf-b1cd4edfcf18" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/donotexport/myKey.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/donotexport/myKey.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/resources/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/resources/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my-stock-portfolio/src/app/shared/dbAccess/stock.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../my-stock-portfolio/src/app/shared/dbAccess/stock.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my-stock-portfolio/src/app/shared/dbAccess/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../my-stock-portfolio/src/app/shared/dbAccess/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my-stock-portfolio/src/app/stock-portfolio/stock-portfolio.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../my-stock-portfolio/src/app/stock-portfolio/stock-portfolio.component.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/code" />
+  </component>
   <component name="ProjectId" id="1XoV7j7kSLWF42B1YFynm5sHI9Y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -15,6 +30,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -29,6 +45,9 @@
       <option name="presentableId" value="Default" />
       <updated>1581712268530</updated>
       <workItem from="1581712272819" duration="198000" />
+      <workItem from="1582133051794" duration="318000" />
+      <workItem from="1582133506633" duration="28000" />
+      <workItem from="1582133538757" duration="1000" />
     </task>
     <servers />
   </component>
@@ -36,9 +55,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="399" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1581712310157">
-      <screen x="0" y="23" width="1440" height="827" />
+    <state x="399" y="268" key="com.intellij.ide.util.TipDialog" timestamp="1582133053343">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
+    <state x="399" y="268" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1582133053343" />
     <state x="399" y="269" key="com.intellij.ide.util.TipDialog/0.23.1440.827@0.23.1440.827" timestamp="1581712310157" />
   </component>
 </project>

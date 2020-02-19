@@ -28,6 +28,8 @@ export class StockPortfolioComponent implements OnInit {
   start: number = 0
   end:number = 4
 
+  currentUpdateState 
+
 
   constructor(private userService: UserService,
               private stockService: StockService,
@@ -35,20 +37,35 @@ export class StockPortfolioComponent implements OnInit {
 
     this.userDetails = new UserModel(),
     this.total = 0
+    this.currentUpdateState = "All Stocks"
 
-    interval(2*45000).subscribe ( x => {
-      this.getData()
+    interval(2*40000).subscribe ( x => {
+      if(this.currentUpdateState == "All Stocks"){
+        console.log("Retrieve Data for all stocks")
+        this.getData()
+      } else {
+        console.log("Retrieve Data for current stocks")
+        this.getCompactData()
+      }
     })
 
 
   }
 
   ngOnInit() {
-
+    
   }
 
   NotificationToParent(userDetails: UserModel) {
     this.outputToParent.emit(userDetails)
+  }
+
+  changeUpdateType() {
+    if (this.currentUpdateState == "All Stocks") {
+      this.currentUpdateState = "Current Four"
+    } else {
+      this.currentUpdateState = "All Stocks"
+    }
   }
 
   loadData(event?:PageEvent){
@@ -66,7 +83,11 @@ export class StockPortfolioComponent implements OnInit {
     this.stockService.updateStocks().subscribe((data) => {
       
       if(data['success'] == false){
-        this.openSnackBar(data['message'])
+        let message: string =
+         "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Data updating has been switched to the ones in the current view. Please wait before switching back to update all."
+        this.openSnackBar(message)
+        this.currentUpdateState = "Current Four"
+
       } else {
 
         let tempList: Stock[] = []
@@ -90,9 +111,47 @@ export class StockPortfolioComponent implements OnInit {
     
   }
 
+  getCompactData(){
+    let stockList = this.userDetails.stocks.slice(this.start, this.end)
+    let stockListNames = [];
+
+    for(let stock of stockList){
+      
+      stockListNames.push(stock['name'])
+    }
+
+    if(stockListNames.length > 0)
+      this.stockService.updateStocksCompact(stockListNames).subscribe((data) => {
+        
+        if(data['success'] == false){
+          this.openSnackBar(data['message'])
+        } else {
+
+          let tempList: Stock[] = []
+
+        
+          for (let stock in data['mystocks']){
+            let stockInterface = new Stock;
+            stockInterface.name = stock;
+            stockInterface.price = data['mystocks'][stock]['price']
+            stockInterface.quantity = data['mystocks'][stock]['quantity']
+            stockInterface.open = data['mystocks'][stock]['open']
+            tempList.push(stockInterface)
+          }
+          this.userDetails.stocks = tempList.reverse()
+          this.userDetails.totalportfolio = data['portfolio']
+          this.NotificationToParent(this.userDetails)
+            
+          }
+  
+      })
+    
+    
+  }
+
   openSnackBar(message:string){
     this._snackBar.open(message,"close",{
-      duration: 2*3500,
+      duration: 10000,
     })
   }  
   

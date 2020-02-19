@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  readonly rootUrl = 'http://127.0.0.1:5000';
+  readonly rootUrl = 'https://my-stock-portfolio-api.herokuapp.com';
   user: UserModel;
   public authData = []
   

@@ -21,8 +21,6 @@
     bottom: 3px;
   }
 
-  .mat-for
-
   .viewport{
     height: 200px;
   }
@@ -30,6 +28,13 @@
   .mat-card {
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
+  }
+
+  .real-time {
+    height: 60px;
+    width: fit-content;
+    padding: 4px;
+    background-color: rgba(194, 238, 185, 0.192);
   }
 
   

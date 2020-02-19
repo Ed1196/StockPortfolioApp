@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StockService {
-  readonly rootUrl = 'http://127.0.0.1:5000';
+  readonly rootUrl = 'https://my-stock-portfolio-api.herokuapp.com';
   stock: StockModel;
   public authData = []
 
@@ -44,6 +44,16 @@ export class StockService {
    updateStocks(){
     var reqHeader = new HttpHeaders({'No-Auth':'False'})
     return this.http.get(this.rootUrl + "/update-info", {headers: reqHeader})
+   }
+
+   updateStocksCompact(stocks: string[]){
+    var reqHeader = new HttpHeaders({'No-Auth':'False'})
+    const body = {
+      stocks: stocks
+    }
+
+    return this.http.post(this.rootUrl + "/update-info-compact", body, {headers: reqHeader})
+
    }
 
 }
