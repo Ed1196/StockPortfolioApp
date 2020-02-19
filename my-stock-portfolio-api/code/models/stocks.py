@@ -2,6 +2,7 @@ import pandas as pd
 from alpha_vantage.timeseries import TimeSeries
 from flask import request
 import requests
+import time
 
 from donotexport.myKey import MyKey
 

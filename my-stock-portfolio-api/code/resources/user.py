@@ -34,9 +34,13 @@ class UserRegister(Resource):
         # We store the data that we parsed into a Variable
         data = UserRegister.parser.parse_args()
         user = UserModel(data['firstname'], data['lastname'], data['email'], data['password'])
-        user.save_to_db()
-        user.send_ver_email()
-        return {'message': 'User was created succesfully!'}, 201
+        try:
+            user.save_to_db()
+            user.send_ver_email()
+            idToken = user.user
+            return {'success': True , 'message': 'User was created succesfully!', 'idToken': idToken['idToken']}, 201
+        except:
+            return {'success': False, 'message': 'User could not be created!'}
 
 
 class UserLogin(Resource):
@@ -58,8 +62,12 @@ class UserLogin(Resource):
         # We store the data that we parsed into a Variable
         data = UserLogin.parser.parse_args()
         user = UserModel('', '', data['email'], data['password'])
-        idToken = user.auth()
-        return {'success': True, 'idToken': idToken}, 201
+        try:
+            idToken = user.auth()
+            return {'success': True, 'idToken': idToken}, 201
+        except:
+            return {'success': False, 'message': 'Invalid Credentials'}
+
 
 
 class UserInfo(Resource):

@@ -27,7 +27,7 @@ class UserModel():
     def save_to_db(self):
         # Add account to user authentication list
         self.user = auth.create_user_with_email_and_password(self.email, self.password)
-
+        print(self.user['idToken'])
         # Add account details to database
         dbUser = {"firstname": self.firstname, "lastname": self.lastname, "email": self.email, "account": self.account}
 
