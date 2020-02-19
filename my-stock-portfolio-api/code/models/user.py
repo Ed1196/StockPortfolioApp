@@ -40,7 +40,7 @@ class UserModel():
 
     def auth(self):
         self.user = auth.sign_in_with_email_and_password(self.email, self.password)
-        return self.user['idToken']
+        return self.user
 
     @classmethod
     def purchase_stock(cls, quantity, price: float, symbol, localId, open):
@@ -207,3 +207,8 @@ class UserModel():
         db.child("users").child(localId).child("totalportfolio").set(str(currentPortfolio))
 
         return (stocksDict, str(currentPortfolio))
+
+    @classmethod
+    def refresh_token(cls, refreshToken):
+        user = auth.refresh(refreshToken)
+        return user['idToken']

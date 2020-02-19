@@ -37,8 +37,11 @@ class UserRegister(Resource):
         try:
             user.save_to_db()
             user.send_ver_email()
-            idToken = user.user
-            return {'success': True , 'message': 'User was created succesfully!', 'idToken': idToken['idToken']}, 201
+            token = user.user
+            return {'success': True ,
+                    'message': 'User was created succesfully!',
+                    'idToken': token['idToken'],
+                    'refreshToken': token['refreshToken']}, 201
         except:
             return {'success': False, 'message': 'User could not be created!'}
 
@@ -63,10 +66,25 @@ class UserLogin(Resource):
         data = UserLogin.parser.parse_args()
         user = UserModel('', '', data['email'], data['password'])
         try:
-            idToken = user.auth()
-            return {'success': True, 'idToken': idToken}, 201
+            token = user.auth()
+            return {'success': True, 'idToken': token['idToken'], 'refreshToken': token['refreshToken']}, 201
         except:
             return {'success': False, 'message': 'Invalid Credentials'}
+
+class TokenRefresh(Resource):
+    parser = reqparse.RequestParser()
+
+    parser.add_argument('refreshToken',
+                        type=str,
+                        required=True,
+                        help='This field cannot be left blank!')
+
+    @security.myJWT.requires_auth
+    def get(self):
+        data = TokenRefresh.parser.parse_args()
+        newIdToken = UserModel.resfresh_token(data['resfreshToken'])
+        return {'success': True, 'idToken': newIdToken}
+
 
 
 
