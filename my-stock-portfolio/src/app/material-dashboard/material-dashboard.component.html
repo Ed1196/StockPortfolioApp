@@ -1,6 +1,10 @@
 <div class="grid-container">
   <div [@fadeInOut]>
-    <span><button  class="balance" mat-flat-button>BALANCE: ${{userDetails.account }}</button></span>
+    <span>
+      <button  class="balance" mat-flat-button>
+        USER: {{userDetails.firstname}} {{userDetails.lastname }}<span></span>  BALANCE: ${{userDetails.account }}        
+      </button>
+    </span>
   </div>
   
   
@@ -11,6 +15,7 @@
         <app-stock-search [card] = "card"></app-stock-search> 
       </div>
 
+      
       <div *ngIf = "card.title === 'portfolio'">
         <app-stock-portfolio [userDetails]= "userDetails"></app-stock-portfolio> 
       </div>

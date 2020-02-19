@@ -19,7 +19,7 @@ export class HomePageComponent implements OnInit {
     private router: Router) { 
     this.userDetails = new UserModel;
 
-    interval(3*6000).subscribe ( x => {
+    interval(30*6000).subscribe ( x => {
       this.refreshToken()
     })
 

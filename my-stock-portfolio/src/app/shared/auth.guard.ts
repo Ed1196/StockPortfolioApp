@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
   canActivate():  boolean {
 
     let refreshToken = localStorage.getItem('refreshToken')
-    console.log(refreshToken)
     if(refreshToken !== null){
       return true
     } else {

@@ -80,9 +80,7 @@ export class MaterialDashboardComponent implements OnInit{
         stockInterface.open = stockList[stock]['open']
         tempList.push(stockInterface)
       }
-      console.log(tempList)
       this.userDetails.stocks = tempList.reverse()
-      console.log(tempList)
 
       let tempList2: Transaction[] = []
       for (let trans in transList){
