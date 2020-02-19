@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { UserService } from './../shared/dbAccess/user.service';
 
 import { Component, OnInit } from '@angular/core';
@@ -20,9 +21,10 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private _snackBar: MatSnackBar
   ) { 
-
+    
     this.user = new UserModel();
     this.hide = true;
 
@@ -50,6 +52,12 @@ export class LoginPageComponent implements OnInit {
     })
   }
 
+  openSnackBar(message:string){
+    this._snackBar.open(message,"close",{
+      duration: 2*3500,
+    })
+  }  
+
   
   onSubmit(){
     this.user = Object.assign({}, this.form.value);
@@ -59,11 +67,12 @@ export class LoginPageComponent implements OnInit {
       if(data.success){
         //storing json object to localStorage
         localStorage.setItem('idToken', data.idToken);
-        this.router.navigate(['/']) 
+        this.router.navigate(['/home']) 
+      } else {
+        this.openSnackBar(data.message)
+        
       }
-      else{ 
-        this.router.navigate(['/login'])
-    }; 
+       
     });
 
   }
@@ -99,5 +108,7 @@ export class LoginPageComponent implements OnInit {
   get password(){
     return this.form.get('password');
   }
+
+  
 
 }

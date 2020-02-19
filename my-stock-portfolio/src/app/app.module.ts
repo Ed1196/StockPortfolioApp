@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/auth.guard';
 import { AuthInterceptor } from './shared/auth.inspector';
 import { StockService } from './shared/dbAccess/stock.service';
 import { UserService } from './shared/dbAccess/user.service';
@@ -86,7 +87,9 @@ import { CommonModule } from '@angular/common';
 
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

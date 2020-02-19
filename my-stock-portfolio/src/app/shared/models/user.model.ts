@@ -21,5 +21,6 @@ export class UserModel {
     transactions ?: Transaction[];
     totalportfolio ?: string;
     account ?: number;
+    change ?: number
     
 }

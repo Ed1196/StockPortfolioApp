@@ -1,6 +1,6 @@
-<div [style.color]= "checkChange()">
+<div [style.color]= "checkChange()" [@fadeInOut]>
   <span class = "name">{{stock.name}}</span>
   <span class = "quantity">{{stock.quantity}}</span>
   <span class = "price">${{stock.price}}</span>
-  <span class = "price">{{ (stock.price - stock.open).toFixed(2) }}</span>
+  <span class = "open">open: {{ stock.open }}</span>
 </div>

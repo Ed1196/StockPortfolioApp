@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { UserService } from './../shared/dbAccess/user.service';
 import { UserModel } from 'src/app/shared/models/user.model';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,8 @@ export class RegisterPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router) 
+    private router: Router,
+    private _snackBar: MatSnackBar) 
     {
     this.user = new UserModel();
     this.hide = true;
@@ -62,9 +64,23 @@ export class RegisterPageComponent implements OnInit {
     
     this.userService.registerUser(this.user)
     .subscribe((data:any) => {
+      if(data.success){
+        //storing json object to localStorage
+        localStorage.setItem('idToken', data.idToken);
+        this.router.navigate(['/home']) 
+      } else {
+        this.openSnackBar(data.message)
+      }
+
     });
 
   }
+
+  openSnackBar(message:string){
+    this._snackBar.open(message,"close",{
+      duration: 2*3500,
+    })
+  } 
 
   login(){
     this.router.navigate(['/login'])

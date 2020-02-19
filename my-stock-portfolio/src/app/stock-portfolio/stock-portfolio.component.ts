@@ -32,11 +32,15 @@ export class StockPortfolioComponent implements OnInit {
   constructor(private userService: UserService,
               private stockService: StockService,
               private _snackBar: MatSnackBar) {
+
     this.userDetails = new UserModel(),
     this.total = 0
-    interval(2*35000).subscribe ( x => {
+
+    interval(2*45000).subscribe ( x => {
       this.getData()
     })
+
+
   }
 
   ngOnInit() {
@@ -60,8 +64,7 @@ export class StockPortfolioComponent implements OnInit {
 
   getData(){
     this.stockService.updateStocks().subscribe((data) => {
-      console.log(data)
-
+      
       if(data['success'] == false){
         this.openSnackBar(data['message'])
       } else {

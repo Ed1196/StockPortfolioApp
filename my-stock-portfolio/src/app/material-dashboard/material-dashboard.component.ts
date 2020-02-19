@@ -5,11 +5,26 @@ import { UserModel } from 'src/app/shared/models/user.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-material-dashboard',
   templateUrl: './material-dashboard.component.html',
-  styleUrls: ['./material-dashboard.component.css']
+  styleUrls: ['./material-dashboard.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({ opacity: 0 })),
+      state('*', style({ opacity: 1 })),
+      transition(':enter', animate('800ms ease-out')),
+      transition(':leave', animate('800ms ease-in')),
+    ])
+  ]
 })
 export class MaterialDashboardComponent implements OnInit{
 
