@@ -80,51 +80,15 @@ export class StockPortfolioComponent implements OnInit {
   }
 
   getData(){
-    this.stockService.updateStocks().subscribe((data) => {
-      
-      if(data['success'] == false){
-        let message: string =
-         "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Data updating has been switched to the ones in the current view. Please wait before switching back to update all."
-        this.openSnackBar(message)
-        this.currentUpdateState = "Current Four"
-
-      } else {
-
-        let tempList: Stock[] = []
-
-      
-        for (let stock in data['mystocks']){
-          let stockInterface = new Stock;
-          stockInterface.name = stock;
-          stockInterface.price = data['mystocks'][stock]['price']
-          stockInterface.quantity = data['mystocks'][stock]['quantity']
-          stockInterface.open = data['mystocks'][stock]['open']
-          tempList.push(stockInterface)
-        }
-        this.userDetails.stocks = tempList.reverse()
-        this.userDetails.totalportfolio = data['portfolio']
-        this.NotificationToParent(this.userDetails)
-          
-        }
- 
-    })
-    
-  }
-
-  getCompactData(){
-    let stockList = this.userDetails.stocks.slice(this.start, this.end)
-    let stockListNames = [];
-
-    for(let stock of stockList){
-      
-      stockListNames.push(stock['name'])
-    }
-
-    if(stockListNames.length > 0)
-      this.stockService.updateStocksCompact(stockListNames).subscribe((data) => {
+    if(this.userDetails.stocks.length > 0){
+      this.stockService.updateStocks().subscribe((data) => {
         
         if(data['success'] == false){
-          this.openSnackBar(data['message'])
+          let message: string =
+          "Alpha Vantage Api calls frequency of 5 per minute or 500 per day has been hit. Data updating has been switched to the ones in the current view. Please wait before switching back to update all."
+          this.openSnackBar(message)
+          this.currentUpdateState = "Current Four"
+
         } else {
 
           let tempList: Stock[] = []
@@ -145,6 +109,43 @@ export class StockPortfolioComponent implements OnInit {
           }
   
       })
+    }
+  }
+
+  getCompactData(){
+    let stockList = this.userDetails.stocks.slice(this.start, this.end)
+    let stockListNames = [];
+
+    for(let stock of stockList){
+      
+      stockListNames.push(stock['name'])
+    }
+
+    if(stockListNames.length > 0){
+      this.stockService.updateStocksCompact(stockListNames).subscribe((data) => {
+        
+        if(data['success'] == false){
+          this.openSnackBar(data['message'])
+        } else {
+
+          let tempList: Stock[] = []
+
+        
+          for (let stock in data['mystocks']){
+            let stockInterface = new Stock;
+            stockInterface.name = stock;
+            stockInterface.price = data['mystocks'][stock]['price']
+            stockInterface.quantity = data['mystocks'][stock]['quantity']
+            stockInterface.open = data['mystocks'][stock]['open']
+            tempList.push(stockInterface)
+          }
+          this.userDetails.stocks = tempList.reverse()
+          this.userDetails.totalportfolio = data['portfolio']
+          this.NotificationToParent(this.userDetails) 
+          }
+      })
+    }
+      
     
     
   }
